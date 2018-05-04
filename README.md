@@ -1,5 +1,5 @@
-ED Dillinger Repository
-Repository managed by build_repo.py
+#build_repo.py
+
 build_repo is a short python script for automating management of a small kodi repository hosted on a git server.
 Usage: build_repo.py [options]
 
