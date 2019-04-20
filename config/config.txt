@@ -9,6 +9,7 @@
 [addons]
 # addons - A comma separated list of addons to include in the repo
 ;addons_list = plugin.video.test
+;addons_path = addons
 
 # user_map - A comma separated list of addon/username mappings
 # The git_username will be overridden if an ADDON_ID is found
@@ -19,4 +20,7 @@
 # The git_host will be overridden if an ADDON_ID is found
 # The following would result in git@test.com:gitusername/plugin.video.test.git
 ;host_map = plugin.video.test:test.com
+
+[versions]
+;use_version_file = False
 
