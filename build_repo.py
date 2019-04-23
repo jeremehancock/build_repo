@@ -85,7 +85,7 @@ if not os.path.exists(work_dir): os.mkdir(work_dir)
 
 ''' load version file if exists '''
 version_file = os.path.join("config/versions.json")
-if os.path.exists(version_file) and config.get('versions', 'use_version_file') is True:
+if os.path.exists(version_file) and config.get('versions', 'versions_file') == "on":
     version_list = json.loads(open(version_file, "r").read())
 else:
     version_list = {}
@@ -147,8 +147,10 @@ def compile_addon(addon_id):
         raise BuildException("Unknown addon_id")
     host = host_map[addon_id] if addon_id in host_map else config.get('git', 'git_host')
     username = user_map[addon_id] if addon_id in user_map else config.get('git', 'git_username')
-    git_url = "git@%s:%s/%s.git" % (host, username, addon_id)
-    print(git_url)
+    if config.get('git', 'method') == "https":
+        git_url = "https://%s/%s/%s.git" % (host, username, addon_id)
+    else:
+        git_url = "git@%s:%s/%s.git" % (host, username, addon_id)
     output_path = os.path.join(work_dir, addon_id)
     shutil.rmtree(output_path, ignore_errors=True)
     os.system("git clone %s %s" % (git_url, output_path))
@@ -215,7 +217,7 @@ if __name__ == '__main__':
     print("Writing %s and md5" % output_f)
     open(output_f + ".md5", 'w').write(check)
 
-    if config.get('versions', 'use_version_file') is True:
+    if config.get('versions', 'versions_file') == "on":
         open(version_file, 'w').write(json.dumps(version_list))
 
     ''' Add new files '''

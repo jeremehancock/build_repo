@@ -5,6 +5,7 @@
 # The basic git url to generate is git@{git_host}:{git_username}/
 ;git_host = github.com
 ;git_username = username
+;method = https
 
 [addons]
 # addons - A comma separated list of addons to include in the repo
@@ -22,5 +23,5 @@
 ;host_map = plugin.video.test:test.com
 
 [versions]
-;use_version_file = False
+;versions_file = off
 
