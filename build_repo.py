@@ -38,6 +38,17 @@ parser.add_option("-i", action="store_true", dest="Interactive", help="Full Inte
 config = ConfigParser()
 config.read('config/config.txt')
 
+class COLORS:
+    GRAY 	= '\033[1;30;40m'
+    RED 	= '\033[1;31;40m'
+    GREEN 	= '\033[1;32;40m'
+    YELLOW 	= '\033[1;33;40m'
+    BLUE 	= '\033[1;34;40m'
+    MAGENTA = '\033[1;35;40m'
+    CYAN 	= '\033[1;36;40m'
+    WHITE 	= '\033[1;37;40m'
+    END 	= '\033[0m'
+
 # base_git_url = "git@%s:%s" % (config.get('git', 'git_host'), config.get('git', 'git_username'))
 addon_list = [a.strip() for a in config.get('addons', 'addons_list').split(",")]
 addons_path = config.get('addons', 'addons_path')
@@ -165,10 +176,10 @@ def compile_addon(addon_id):
         cur_version = addon.get('version')
         addon_name = addon.get('name')
         break
-    c = input("Compile %s [N]: " % addon_name).strip()
+    c = input(COLORS.GREEN + "Compile %s [N]: " % addon_name + COLORS.END).strip()
     if c.lower() != "y": return
     if addon_id in version_list: cur_version = version_list[addon_id]
-    version = input("%s Version [%s]: " % (addon_name, cur_version)).strip()
+    version = input(COLORS.GREEN + "%s Version [%s]: " % (addon_name, cur_version) + COLORS.END).strip()
     version = get_version(version, cur_version)
     if not version: raise BuildException("Version Error: Invalid version format.")
     print("Setting %s version to %s" % (addon_name, version))
@@ -224,9 +235,9 @@ if __name__ == '__main__':
     os.system("git add %s" % addons_path)
     message = strftime("Updated at %D %T")
     os.system('git commit -a -m "%s"' % message)
-    c = input("Push changes? [N]: ").strip()
+    c = input(COLORS.GREEN + "Push changes? [N]: " + COLORS.END).strip()
     if c.lower() == 'y':
         os.system('git push')
-
-    print("Complete!")
-
+        print(COLORS.RED + "Complete!" + COLORS.END)
+    else:
+        print(COLORS.RED + "Don't forget to commit your changes" + COLORS.END)
