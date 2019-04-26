@@ -238,6 +238,6 @@ if __name__ == '__main__':
     c = input(COLORS.GREEN + "Push changes? [N]: " + COLORS.END).strip()
     if c.lower() == 'y':
         os.system('git push')
-        print(COLORS.RED + "Complete!" + COLORS.END)
+        print(COLORS.GREEN + "Complete!" + COLORS.END)
     else:
         print(COLORS.RED + "Don't forget to commit your changes" + COLORS.END)
